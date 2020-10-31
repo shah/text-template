@@ -1,4 +1,4 @@
-import { TemplateLiteral } from "./template-literals.ts";
+import { TemplateLiteral } from "./template-literal.ts";
 import { escapeHtml } from "./escape-html.ts";
 
 export interface GovernedTemplatePartial {

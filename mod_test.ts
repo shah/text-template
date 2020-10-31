@@ -24,17 +24,21 @@ Deno.test(`Non-HTML escaped string literal with HTML escaped placeholders`, asyn
 });
 
 Deno.test(`HTML tag raw`, async () => {
-  const div = mod.htmlTag("div");
+  const div = mod.xmlTag("div");
   const phe = div`This should be in a div with <no escapes>`;
   ta.assertEquals(phe, "<div>This should be in a div with <no escapes></div>");
 });
 
 Deno.test(`HTML tag with results escaped`, async () => {
-  const div = mod.htmlTag("div", true);
+  const div = mod.xmlTag(
+    "div",
+    { style: "color: white" },
+    { escapeResult: true },
+  );
   const phe = div`This should be in a div with <escaped tag>`;
   ta.assertEquals(
     phe,
-    "<div>This should be in a div with &lt;escaped tag&gt;</div>",
+    `<div style="color: white">This should be in a div with &lt;escaped tag&gt;</div>`,
   );
 });
 
