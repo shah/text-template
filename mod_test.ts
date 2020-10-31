@@ -44,7 +44,7 @@ Deno.test(`HTML tag with results escaped`, async () => {
 
 Deno.test(`HTML template 00 (basic)`, async () => {
   const template = mod.governedTemplate(
-    testFilePath("mod_test-00.tmpl.html"),
+    Deno.readTextFileSync(testFilePath("mod_test-00.tmpl.html")),
     mod.defaultGovernedTemplateOptions({
       bodyPlaceholderText: "<!-- BODY CONTENT GOES HERE -->",
       partials: [{
@@ -66,7 +66,7 @@ Deno.test(`HTML template 00 (basic)`, async () => {
 
 Deno.test(`HTML template 01 (complex)`, async () => {
   const template = mod.governedTemplate(
-    testFilePath("mod_test-01.tmpl.html"),
+    Deno.readTextFileSync(testFilePath("mod_test-01.tmpl.html")),
     mod.defaultGovernedTemplateOptions({
       bodyPlaceholderText: "<!-- BODY CONTENT GOES HERE -->",
       partials: [{
@@ -75,6 +75,8 @@ Deno.test(`HTML template 01 (complex)`, async () => {
       }],
     }),
   );
+
+  // use extra indentation so it matches the source template's indentation structure
   const generated = template`<p>Hi</p>
 
                                                         Click below to create your new password.

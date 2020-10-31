@@ -24,10 +24,9 @@ export function defaultGovernedTemplateOptions(
 }
 
 export function governedTemplate(
-  layoutSource: string,
+  source: string,
   options: GoverendTemplateOptions = defaultGovernedTemplateOptions(),
 ): TemplateLiteral {
-  const source = Deno.readTextFileSync(layoutSource);
   const { bodyPlaceholderText, escapeBodyContent, partials } = options;
   const [bodyStart, bodyEnd] = source.split(bodyPlaceholderText);
   return (literals: TemplateStringsArray, ...tmplLiteralArg: string[]) => {
