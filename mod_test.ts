@@ -38,7 +38,7 @@ Deno.test(`HTML tag with results escaped`, async () => {
   );
 });
 
-Deno.test(`HTML template 00`, async () => {
+Deno.test(`HTML template 00 (basic)`, async () => {
   const template = mod.governedTemplate(
     testFilePath("mod_test-00.tmpl.html"),
     mod.defaultGovernedTemplateOptions({
@@ -60,7 +60,7 @@ Deno.test(`HTML template 00`, async () => {
   ta.assertStrictEquals(generated, golden);
 });
 
-Deno.test(`HTML template 01`, async () => {
+Deno.test(`HTML template 01 (complex)`, async () => {
   const template = mod.governedTemplate(
     testFilePath("mod_test-01.tmpl.html"),
     mod.defaultGovernedTemplateOptions({
