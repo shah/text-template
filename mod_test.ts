@@ -42,9 +42,11 @@ Deno.test(`HTML tag with results escaped`, async () => {
   );
 });
 
-Deno.test(`HTML template 00 (basic)`, async () => {
+Deno.test(`HTML template 00 (basic, local file)`, async () => {
   const template = mod.governedTemplate(
-    Deno.readTextFileSync(testFilePath("mod_test-00.tmpl.html")),
+    await mod.flexibleTemplateAcquirer(
+      { templateFileName: testFilePath("mod_test-00.tmpl.html") },
+    ),
     mod.defaultGovernedTemplateOptions({
       bodyPlaceholderText: "<!-- BODY CONTENT GOES HERE -->",
       partials: [{
@@ -62,6 +64,40 @@ Deno.test(`HTML template 00 (basic)`, async () => {
     testFilePath("mod_test-00.html.golden"),
   );
   ta.assertStrictEquals(generated, golden);
+});
+
+Deno.test(`HTML template 00 (basic, TypeScript import URL)`, async () => {
+  const template = mod.governedTemplate(
+    await mod.flexibleTemplateAcquirer(
+      { templateImportURL: "./mod_test-00.tmpl.ts" },
+    ),
+    mod.defaultGovernedTemplateOptions({
+      bodyPlaceholderText: "<!-- BODY CONTENT GOES HERE -->",
+      partials: [{
+        placeholder: "<!-- HEAD PARTIAL CONTENT -->",
+        content: "<title>Page Title</title>",
+      }],
+    }),
+  );
+
+  const content = "variable";
+  const generated = template
+    `This is my body content, which can contain a ${content} or anything else that can go into a TypeScript template literal.`;
+
+  const golden = Deno.readTextFileSync(
+    testFilePath("mod_test-00.html.golden"),
+  );
+  ta.assertStrictEquals(generated, golden);
+});
+
+Deno.test(`HTML template 00 (basic, JSON input)`, async () => {
+  const result = await mod.transformJsonInput(
+    Deno.readTextFileSync(testFilePath("mod_test-00.in.json")),
+  );
+  const golden = Deno.readTextFileSync(
+    testFilePath("mod_test-00.html.golden"),
+  );
+  ta.assertStrictEquals(result, golden);
 });
 
 Deno.test(`HTML template 01 (complex)`, async () => {

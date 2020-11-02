@@ -1,0 +1,17 @@
+{
+    "templateImportURL": "./mod_test-00.tmpl.ts",
+    "body": "This is my body content, which can contain a ${content} or anything else that can go into a TypeScript template literal.",
+    "interpolate": {
+        "content": "variable"
+    },
+    "templateOptions": {
+        "bodyPlaceholderText": "<!-- BODY CONTENT GOES HERE -->",
+        "escapeBodyContent": false,
+        "partials": [
+            {
+                "placeholder": "<!-- HEAD PARTIAL CONTENT -->",
+                "content": "<title>Page Title</title>"
+            }
+        ]
+    }
+}
