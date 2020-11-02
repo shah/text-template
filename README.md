@@ -85,3 +85,34 @@ After executing the code above, `generated` will contain:
 
 </html>
 ```
+
+# HTTP Service Usage
+
+Start the Template Orchestration server:
+
+```bash
+deno-run toctl.ts server --verbose
+```
+
+In a separate window, try the service using [mod_test-00.in.json](mod_test-00.in.json) as the HTTP request body:
+
+```bash
+cd $HOME/workspaces/github.com/shah/ts-safe-template
+curl -H "Content-Type: application/json" --data @mod_test-00.in.json http://localhost:8163/transform
+```
+
+The output should be:
+
+```html
+<html>
+
+<head>
+    <title>Page Title</title>
+</head>
+
+<body>
+    This is my body content, which can contain a variable or anything else that can go into a TypeScript template literal.
+</body>
+
+</html>
+```
